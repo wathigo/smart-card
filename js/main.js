@@ -175,7 +175,13 @@ const validateWithLuhn = (digits) => {
   const sum = luhnDigits.reduce((a,b) => {return parseInt(a) + parseInt(b)}, 0);
   return (sum % 10) == 0;
 };
-const validateCardNumber = () => {};
+const validateCardNumber = () => {
+  const cardDigits = appState.cardDigits.flat();
+  const valid = validateWithLuhn(cardDigits);
+  const field = document.querySelector("[data-cc-digits]");
+  flagIfInvalid(field, valid);
+  return valid;
+};
 const validatePayment = () => {
   validateCardNumber();
   validateCardHolderName();
