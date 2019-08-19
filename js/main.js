@@ -156,7 +156,25 @@ const validateCardHolderName = () => {
   flagIfInvalid(field, valid);
   return valid;
 };
-
+const validateWithLuhn = (digits) => {
+  let luhnDigits = [];
+  let index = 0;
+  digits.forEach((digit, index) => {
+    if (index % 2 == 0){
+      if ((digits[index] * 2) > 9){
+        luhnDigits.push((digit*2)-9)
+      }
+      else{
+        luhnDigits.push(digit*2)
+      }
+    }
+    else {
+      luhnDigits.push(digit);
+    }
+  })
+  const sum = luhnDigits.reduce((a,b) => {return parseInt(a) + parseInt(b)}, 0);
+  return (sum % 10) == 0;
+};
 const validateCardNumber = () => {};
 const validatePayment = () => {
   validateCardNumber();
