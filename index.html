@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>smart card</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div data-cart-info>
+  		<h1 class="mdc-typography--headline4">
+  			<span class="material-icons">shopping_cart</span>
+  			<span data-bill></span>
+  		</h1>
+	  </div>
+  	<div data-credit-card class="mdc-card mdc-card-outline">
+  		<div class="mdc-card__primary-action">
+  			<figure>
+  				<img data-card-type src="https://placehold.it/120x60.png?text=Card">
+  			</figure>
+  			<div data-cc-digits>
+  				<input type="text" size="4" placeholder="----">
+  				<input type="text" size="4" placeholder="----">
+  				<input type="text" size="4" placeholder="----">
+  				<input type="text" size="4" placeholder="----">
+  			</div>
+
+  			<div data-cc-info>
+  				<input type="text" size="20" placeholder="Name Surname">
+  				<input type="text" size="6" placeholder="MM/YY">
+  			</div>
+  		</div>
+  	</div>
+	  <button class="mdc-button" data-pay-btn>Pay Now</button>
+    <script src="./js/main.js" type="text/javascript"></script>
+  </body>
+</html>
