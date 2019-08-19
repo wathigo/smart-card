@@ -166,7 +166,45 @@ const validatePayment = () => {
 const smartCursor = (event ,fieldIndex, fields) => {
   fields[fieldIndex].focus()
 }
-
+const smartInput = (event, fieldIndex, fields) => {
+  if (fieldIndex < 4){
+    let {target} = event;
+    const allowedKeys = ['Backspace', 'Delete', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'];
+    const checkAllowed = allowedKeys.includes(event.code);
+    if (isNaN(event.key) && !allowedKeys){
+      event.preventDefault();
+    }
+    let innerIndex = target.selectionStart;
+    if (target.value.length === 4 && fieldIndex !== 3){
+      fieldIndex = fieldIndex + 1;
+      smartCursor(event, fieldIndex, fields);
+      innerIndex = 0;
+      target = fields[fieldIndex]
+    }
+    if (appState.cardDigits[fieldIndex] == null){
+      appState.cardDigits[fieldIndex] = [];
+    }
+    if (event.key === 'Backspace'){
+      appState.cardDigits[fieldIndex][innerIndex-1] = null;
+    }
+    else if (event.code === 'Delete'){
+      appState.cardDigits[fieldIndex][innerIndex] = null;
+    }
+    let checkNull = false;
+    if ((appState.cardDigits[fieldIndex].length < 4 || checkNull) && !isNaN(event.key)){
+      appState.cardDigits[fieldIndex][innerIndex] = event.key;
+    }
+    if (!isNaN(event.key) && fieldIndex < 3){
+      setTimeout(() => {
+        if (fieldIndex == 0 && appState.cardDigits[fieldIndex].length === 4){
+          let first4Digits = appState.cardDigits[fieldIndex];
+          detectCardType(first4Digits);
+        }
+        target.value = '#'.repeat(appState.cardDigits[fieldIndex].length)
+      }, 500);
+    }
+  }
+}
 const enableSmartTyping = () => {
   nodeList = document.querySelectorAll("input");
   nodeList.forEach((field, index, fields) => {
